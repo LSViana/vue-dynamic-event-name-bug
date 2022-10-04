@@ -1,29 +1,13 @@
 # vue-dynamic-event-name-bug
 
-This template should help get you started developing with Vue 3 in Vite.
+This repository contains a bug demonstration related to [RIDER-83124](https://youtrack.jetbrains.com/issue/RIDER-83124/Vue-variables-used-as-dynamic-event-names-are-marked-as-unused). It's a bug in the Vue.js tooling of JetBrains Rider.
 
-## Recommended IDE Setup
+The bug happens when variables used as dynamic event names in `<template>` are marked as unused by the IDE.
+There are two examples of this bug demonstrated through:
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+1. Composition API + `script setup`: `src/App.vue`
+2. Options API: `src/components/HelloWorld.vue`
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+Both examples declare an `eventName` variable (or `computed` property) and use it via the syntax `@[eventName]="..."`
+inside the `<template>` of their respective components. Even with that usage, the IDE marks both `eventName` identifiers
+as unused in both scenarios.
